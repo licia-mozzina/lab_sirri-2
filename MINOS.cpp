@@ -16,8 +16,8 @@ int MINOS() {
     // Setting the observables 
     RooRealVar reco_en ("reco_en", "reco_en", 0.5, 14.);
     //RooRealVar mc_noosc ("mc_noosc", "mc_noosc", 0.5, 14.); // non serve per l'altro data set, anzi, devono essere la stessa variabile perchè altrimenti non fitta
-    RooRealVar mixing ("mixing", "sin^2(2#theta)", 0.8, 1.);
-    RooRealVar dm2 ("dm2", "mass_splitting", 2.2e-3, 2.6e-3);  
+    RooRealVar mixing ("mixing", "sin^{2}(2#theta)", 0.8, 1.);
+    RooRealVar dm2 ("dm2", "(#Deltam^{2})", 2.2e-3, 2.6e-3);  
     RooRealVar distance ("distance", "distance", 730); //constant
     
     // Computing the oscillation probability with observed data
@@ -64,6 +64,11 @@ int MINOS() {
     myfile.open("minos_fit.txt");
     myfile << "MIGRAD results: " << *result << '\n'; 
 
+    RooPlot* contour = m.contour(mixing, dm2, 1, 2, 0); // up to 3 sigmas
+    TCanvas *c2 = new TCanvas("c2", "MINOS_contour", 1600, 800);
+    contour->Draw();    
+    c2->Print("minos_likelihood.png");
+
     // Running HESSE for the parameters and printing the results
     m.setVerbose(kFALSE);
     m.hesse();               
@@ -71,7 +76,7 @@ int MINOS() {
     mixing.Print();
 
     result = m.save("m1", "HESSE");
-    result->Print("v"); // con v stampa anche distance e le global corrections 
+    result->Print("v"); 
     myfile << "HESSE results: " << *result << '\n'; 
 
     // Running MINOS only on mass splitting parameter, printing the result
@@ -79,7 +84,7 @@ int MINOS() {
     dm2.Print();
 
     result = m.save("m2", "MINOS");
-    result->Print("v"); // con v stampa anche distance e le global corrections 
+    result->Print("v"); 
     myfile << "MINOS results: " << *result << '\n'; 
 
     myfile.close();
