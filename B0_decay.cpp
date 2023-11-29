@@ -87,7 +87,7 @@ int B0_decay() {
   c1->Divide(3);
   
   c1->cd(1);
-  xframe->Draw();
+  xframe->Draw(); 
 
   TLegend *leg1 = new TLegend(0.65, 0.73, 0.86, 0.87);
   leg1->SetFillColor(kWhite);

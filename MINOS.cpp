@@ -9,6 +9,7 @@
 #include "TAxis.h"
 #include "TCanvas.h"
 #include "TFile.h"
+#include "TMath.h"
 
 using namespace RooFit;
 
@@ -57,7 +58,7 @@ int MINOS() {
     dm2.Print();
     mixing.Print();
 
-    RooFitResult * result = m.save("m", "MIGRAD");
+    RooFitResult * result = m.save("m", "MIGRAD"); // forse lui lo vuole solo alla fine, quindi su file di testo scrivo solo gli altri risultati
     result->Print("v"); // con v stampa anche distance e le global corrections 
 
     ofstream myfile;
