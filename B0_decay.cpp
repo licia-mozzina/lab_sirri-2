@@ -66,6 +66,8 @@ int B0_decay() {
   
   // draw data and model
   RooPlot *xframe = x.frame();
+  xframe->SetTitle("B0 decay");
+  xframe->GetXaxis()->SetTitle("m(p#bar{p})[MeV/c^{2}]");
 
   data->plotOn(xframe, Name("Data"));
   model.plotOn(xframe, Components(gaus0), LineColor(kViolet+1), Name("gaus0"));
@@ -79,17 +81,23 @@ int B0_decay() {
 
   // Frames and plots of residual and pulls distributions
   RooPlot *res = x.frame(Title("Residual Distribution"));
+  res->GetXaxis()->SetTitle("m(p#bar{p})[MeV/c^{2}]");
+  res->GetYaxis()->SetTitle("Events");
   res->addPlotable(hresid, "P");
   RooPlot *pull = x.frame(Title("Pulls Distribution"));
+  pull->GetXaxis()->SetTitle("m(p#bar{p})[MeV/c^{2}]");
+  pull->GetYaxis()->SetTitle("Events");
   pull->addPlotable(hpull, "P");
 
-  TCanvas *c1 = new TCanvas("c1", "B0_decay", 800, 400);
+
+  //Plotting
+  TCanvas *c1 = new TCanvas("c1", "B0_decay", 1600, 800);
   c1->Divide(3);
   
   c1->cd(1);
   xframe->Draw(); 
 
-  TLegend *leg1 = new TLegend(0.65, 0.73, 0.86, 0.87);
+  TLegend *leg1 = new TLegend(0.55, 0.60, 0.85, 0.87);
   leg1->SetFillColor(kWhite);
   leg1->SetLineColor(kBlack);
   leg1->AddEntry("Data", "Data", "P");
@@ -106,6 +114,7 @@ int B0_decay() {
   c1->cd(3);
   pull->Draw();
 
+  c1->Print("B0_decay.png");
 
   return 0;
 }

@@ -1,3 +1,6 @@
-MIGRAD results: RooFitResult::m[constPars=(distance),floatPars=(dm2,mixing)] = (status=0,FCNmin=8396.09,EDM=3.75296e-07,covQual=3)
-HESSE results: RooFitResult::m1[constPars=(distance),floatPars=(dm2,mixing)] = (status=0,FCNmin=8396.09,EDM=0.000366538,covQual=2)
-MINOS results: RooFitResult::m2[constPars=(distance),floatPars=(dm2,mixing)] = (status=0,FCNmin=8396.09,EDM=4.08293e-07,covQual=3)
+MIGRAD results: (Delta m)^2 = 0.00232967 +/- 7.25233e-05 eV^2
+	 	 	 (sin(2theta))^2 = 0.88508 +/- 0.0251741
+HESSE results: (Delta m)^2 = 0.00232967 +/- 0.000103735 eV^2
+	 	 	 (sin(2theta))^2 = 0.88508 +/- 0.0350891
+MINOS results: (Delta m)^2 = 0.00232967 +/- 0.000103735 eV^2
+	 	 	(status=0,FCNmin=8396.09,EDM=1.90381e-07,covQual=3)
