@@ -15,6 +15,7 @@ using namespace RooFit;
 int B0_decay() {
   // first declare the observable
   RooRealVar x("x", "m(p-pbar)", 5090., 5590.);
+  x.setBins(24);
 
   // background model
   RooRealVar c("c", "exponential par", -0.001, -1.,

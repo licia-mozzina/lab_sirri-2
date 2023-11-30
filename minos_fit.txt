@@ -1,6 +1,27 @@
-MIGRAD results: (Delta m)^2 = 0.00232967 +/- 7.25233e-05 eV^2
-	 	 	 (sin(2theta))^2 = 0.88508 +/- 0.0251741
-HESSE results: (Delta m)^2 = 0.00232967 +/- 0.000103735 eV^2
-	 	 	 (sin(2theta))^2 = 0.88508 +/- 0.0350891
-MINOS results: (Delta m)^2 = 0.00232967 +/- 0.000103735 eV^2
-	 	 	(status=0,FCNmin=8396.09,EDM=1.90381e-07,covQual=3)
+MIGRAD results: 
+(Delta m)^2 = 0.00232967 +/- 7.25233e-05 eV^2
+(sin(2theta))^2 = 0.88508 +/- 0.0251741
+
+*****************************
+HESSE results: 
+(Delta m)^2 = 0.00232967 +/- 0.000103735 eV^2
+(sin(2theta))^2 = 0.88508 +/- 0.0350891
+
+*****************************
+MINOS results: 
+(Delta m)^2 = 0.00232967 +/- 0.000103735 eV^2
+
+  RooFitResult: minimized FCN value: 8396.09, estimated distance to minimum: 1.90381e-07
+                covariance matrix quality: Full, accurate covariance matrix
+                Status : MIGRAD=0 HESSE=0 MINOS=0 
+
+    Constant Parameter    Value     
+  --------------------  ------------
+              distance    7.3000e+02
+
+    Floating Parameter  InitialValue    FinalValue (+HiError,-LoError)    GblCorr.
+  --------------------  ------------  ----------------------------------  --------
+                   dm2    2.3295e-03    2.3297e-03 (+7.41e-05,-7.17e-05)  <none>
+                mixing    8.8514e-01    8.8508e-01         +/-  3.51e-02  <none>
+
+(status=0,FCNmin=8396.09,EDM=1.90381e-07,covQual=3)

@@ -67,7 +67,7 @@ int MINOS() {
     ofstream myfile;
     myfile.open("minos_fit.txt");
 
-    // Minimizing via MINUIT with MIGRAD and printing the results
+    // Minimizing via MINUIT with MIGRAD and printing the results to txt file
     m.setVerbose(kTRUE);
     m.migrad();
     dm2.Print();
@@ -76,9 +76,11 @@ int MINOS() {
     //RooFitResult * result = m.save("m", "MIGRAD"); // forse lui lo vuole solo alla fine, quindi su file di testo scrivo solo gli altri risultati
     //result->Print("v"); // con v stampa anche distance e le global corrections 
 
-    myfile << "MIGRAD results: (Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n'; 
-    myfile << "\t \t \t (sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n'; 
+    myfile << "MIGRAD results: \n(Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n'; 
+//    myfile << "\t \t \t (sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n'; 
+    myfile << "(sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n'; 
     //result->printArgs(myfile); 
+    myfile << "\n*****************************\n"; 
 
     RooPlot* contour = m.contour(mixing, dm2, 1, 2, 0); // up to 3 sigmas
     contour->SetTitle("Contour plot");
@@ -88,30 +90,36 @@ int MINOS() {
     contour->Draw();    
     c2->Print("minos_likelihood.png");
 
-    // Running HESSE for the parameters and printing the results
+    // Running HESSE for the parameters and printing the results to txt file
     m.setVerbose(kFALSE);
     m.hesse();               
     dm2.Print();
     mixing.Print();
 
-    myfile << "HESSE results: (Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n'; 
-    myfile << "\t \t \t (sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n';
+    myfile << "HESSE results: \n(Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n'; 
+//    myfile << "\t \t \t (sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n';
+    myfile << "(sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n';
+    myfile << "\n*****************************\n"; 
+
 
     // result = m.save("m1", "HESSE");
     // result->Print("v"); 
     // myfile << "HESSE results: " << *result << '\n'; 
 
-    // Running MINOS only on mass splitting parameter, printing the result
+    // Running MINOS only on mass splitting parameter and printing the result to txt file
     m.minos(dm2);
     dm2.Print();
-    myfile << "MINOS results: (Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n';     
-    myfile << "\t \t \t";
+    myfile << "MINOS results: \n(Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n';     
+    //myfile << "\t \t \t";
 
-    // Saving all results from MINOS fit
+    // Saving all results from MINOS fit on txt file
     RooFitResult * result = m.save("m", "MINOS"); 
     result = m.save("m2", "MINOS");
     result->Print("v"); 
     //myfile << "MINOS results: " << *result << '\n'; 
+
+//  result->floatParsFinal().printMultiline(myfile, 1111, kTRUE);
+    result->printMultiline(myfile, 1111, kTRUE);
     result->printValue(myfile);
     
     myfile.close();

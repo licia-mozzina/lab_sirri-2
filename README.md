@@ -4,3 +4,5 @@ First part of MINOS is complete
 Added txt file and png for MINOS results
 MINOS almost complete <br/>
 First part of ARIADNE <br/>
+MINOS almost ready to submit
+MINOS is complete, starting submit branch
