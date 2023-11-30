@@ -18,8 +18,7 @@ int B0_decay() {
   x.setBins(24);
 
   // background model
-  RooRealVar c("c", "exponential par", -0.001, -1.,
-               0.); // mancavano i punti decimali, era confuso
+  RooRealVar c("c", "exponential par", -0.001, -1., 0.); 
   RooExponential bkg("bkg", "Comb. bkg.", x, c);
 
   // first gaussian

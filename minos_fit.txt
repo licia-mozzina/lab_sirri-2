@@ -24,4 +24,3 @@ MINOS results:
                    dm2    2.3295e-03    2.3297e-03 (+7.41e-05,-7.17e-05)  <none>
                 mixing    8.8514e-01    8.8508e-01         +/-  3.51e-02  <none>
 
-(status=0,FCNmin=8396.09,EDM=1.90381e-07,covQual=3)

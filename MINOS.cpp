@@ -16,7 +16,6 @@ using namespace RooFit;
 int MINOS() {
     // Setting the observables 
     RooRealVar reco_en ("reco_en", "reco_en", 0.5, 14.);
-    //RooRealVar mc_noosc ("mc_noosc", "mc_noosc", 0.5, 14.); // non serve per l'altro data set, anzi, devono essere la stessa variabile perchè altrimenti non fitta
     RooRealVar mixing ("mixing", "sin^{2}(2#theta)", 0.8, 1.);
     RooRealVar dm2 ("dm2", "(#Deltam^{2})", 2.0e-3, 2.6e-3);  
     RooRealVar distance ("distance", "distance", 730); //constant
@@ -25,15 +24,15 @@ int MINOS() {
     RooFormulaVar osc_prob ("osc_prob", "1 - @1 * (TMath::Sin(1.267 * @2 * @3 / @0))^2", RooArgList(reco_en, mixing, dm2, distance));
 
     // Retrieving measured and simulated MC data from file
-    RooDataSet* ds_reco_en = RooDataSet::read("minos_2013_data.dat", reco_en, "v");  //tutti puntatori perchè o tutti o nessuno
+    RooDataSet* ds_reco_en = RooDataSet::read("minos_2013_data.dat", reco_en, "v");  
     RooDataSet* ds_mc_noosc = RooDataSet::read("minos_2013_mc.dat", reco_en, "v"); 
 
     // Getting a copy of data_mc_noosc with only "mc_noosc" column and binning it
-    RooDataSet* ds_mc_reduced = (RooDataSet *)ds_mc_noosc->reduce(RooArgSet(reco_en)); //questo giro è assolutamente inutile, ha solo una colonna di partenza
+    RooDataSet* ds_mc_reduced = (RooDataSet *)ds_mc_noosc->reduce(RooArgSet(reco_en)); 
     RooDataHist* dh_mc_noosc = ds_mc_reduced->binnedClone();
 
     // Creating from MC data a histo-based function for non-osc neutrinos
-    RooHistFunc func_noosc ("func_noosc", "No oscillation", reco_en, *dh_mc_noosc, 2); //2 è interpolation order, ovvero ordine polinomio che va fittato
+    RooHistFunc func_noosc ("func_noosc", "No oscillation", reco_en, *dh_mc_noosc, 2);
 
     // Defining fitting function
     auto model = RooGenericPdf("model", "Oscillation probability * MC expected oscillation", "@0 * @1", RooArgList(osc_prob, func_noosc));
@@ -73,15 +72,11 @@ int MINOS() {
     dm2.Print();
     mixing.Print();
 
-    //RooFitResult * result = m.save("m", "MIGRAD"); // forse lui lo vuole solo alla fine, quindi su file di testo scrivo solo gli altri risultati
-    //result->Print("v"); // con v stampa anche distance e le global corrections 
-
     myfile << "MIGRAD results: \n(Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n'; 
-//    myfile << "\t \t \t (sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n'; 
     myfile << "(sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n'; 
-    //result->printArgs(myfile); 
     myfile << "\n*****************************\n"; 
 
+    // Plotting contour of mass splitting and mixing parameters
     RooPlot* contour = m.contour(mixing, dm2, 1, 2, 0); // up to 3 sigmas
     contour->SetTitle("Contour plot");
     contour->GetXaxis()->SetTitle("sin^{2}(2#theta)");
@@ -97,30 +92,20 @@ int MINOS() {
     mixing.Print();
 
     myfile << "HESSE results: \n(Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n'; 
-//    myfile << "\t \t \t (sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n';
     myfile << "(sin(2theta))^2 = " << mixing << " +/- " << mixing.getError() << '\n';
     myfile << "\n*****************************\n"; 
-
-
-    // result = m.save("m1", "HESSE");
-    // result->Print("v"); 
-    // myfile << "HESSE results: " << *result << '\n'; 
 
     // Running MINOS only on mass splitting parameter and printing the result to txt file
     m.minos(dm2);
     dm2.Print();
     myfile << "MINOS results: \n(Delta m)^2 = " << dm2 << " +/- " << dm2.getError() << " eV^2" << '\n';     
-    //myfile << "\t \t \t";
 
     // Saving all results from MINOS fit on txt file
     RooFitResult * result = m.save("m", "MINOS"); 
     result = m.save("m2", "MINOS");
     result->Print("v"); 
-    //myfile << "MINOS results: " << *result << '\n'; 
 
-//  result->floatParsFinal().printMultiline(myfile, 1111, kTRUE);
     result->printMultiline(myfile, 1111, kTRUE);
-    result->printValue(myfile);
     
     myfile.close();
 
