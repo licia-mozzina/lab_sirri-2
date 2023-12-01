@@ -82,7 +82,7 @@ int MINOS() {
     //result->printArgs(myfile); 
     myfile << "\n*****************************\n"; 
 
-    RooPlot* contour = m.contour(mixing, dm2, 1, 2, 0); // up to 3 sigmas
+    RooPlot* contour = m.contour(mixing, dm2, 1, 2, 3); // up to 3 sigmas
     contour->SetTitle("Contour plot");
     contour->GetXaxis()->SetTitle("sin^{2}(2#theta)");
     contour->GetYaxis()->SetTitle("#Deltam^{2}");
